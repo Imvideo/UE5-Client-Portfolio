@@ -73,3 +73,16 @@ Plugins/**/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+.idea/
+
+# --- Unreal project subfolder (ProjectAxiom) ---
+ProjectAxiom/Binaries/
+ProjectAxiom/Build/
+ProjectAxiom/DerivedDataCache/
+ProjectAxiom/Intermediate/
+ProjectAxiom/Saved/
+ProjectAxiom/.vs/
+ProjectAxiom/.vscode/
+ProjectAxiom/*.code-workspace
+ProjectAxiom/.ignore
