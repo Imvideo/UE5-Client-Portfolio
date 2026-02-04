@@ -15,7 +15,7 @@ UE5 C++ Client Portfolio Project
 ## 1. Overview
 - **Genre:** Top-down action roguelike (single player)
 - **Engine:** Unreal Engine 5 (C++)
-- **Duration:** YYYY.MM ~ YYYY.MM (ongoing)
+- **Duration:** 2026.02 ~ YYYY.MM (ongoing)
 - **Team:** Solo
 - **Goal:** Build production-like client systems (data-driven skills, debugging tools, performance)
 
