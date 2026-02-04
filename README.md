@@ -27,8 +27,8 @@ UE5 C++ Client Portfolio Project
 - Idle / Walk / Run animation blending
 
 <details>
+<summary>🎮 Day 3 – Player Movement Demo</summary>
 ▶️ [Day 3 플레이어 이동 시연 영상](videos/day03_player_movement.mp4)
-
 
 </details>
 
