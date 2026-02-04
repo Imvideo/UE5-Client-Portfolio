@@ -51,6 +51,13 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 void APlayerCharacter::OnMove(const FInputActionValue& Value)
 {
 	const FVector2D Move = Value.Get<FVector2D>();
-	UE_LOG(LogTemp, Log, TEXT("[Move] X=%.2f Y=%.2f"), Move.X, Move.Y);
+	
+	if (!Controller) return;
+	
+	// 월드 기준 X, Y 사용
+	const FVector Forward = FVector(1.f, 0.f, 0.f);
+	const FVector Rigth = FVector(0.f, 1.f, 0.f);
+	
+	AddMovementInput(Forward, Move.Y);
+	AddMovementInput(Rigth, Move.X);
 }
-
