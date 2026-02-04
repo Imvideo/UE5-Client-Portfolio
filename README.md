@@ -30,9 +30,6 @@ UE5 C++ Client Portfolio Project
 ▶️ [Day 3 플레이어 이동 시연 영상](videos/day03_player_movement.mp4)
 
 
-[![Day 3 Demo](videos/day03_player_movement.gif)](videos/day03_player_movement.mp4)
-
-
 </details>
 
 ---
