@@ -48,6 +48,7 @@ UE5 C++ Client Portfolio Project
 
 ## 4. Architecture (Planned)
 ### 4.1 Module / Folder Structure
+```text
 Source/ProjectAxiom/
  ├─ Core/        // common utilities, interfaces
  ├─ Gameplay/    // player, enemies, combat
@@ -55,7 +56,7 @@ Source/ProjectAxiom/
  ├─ UI/          // HUD, debug UI
  ├─ Systems/     // spawner, save/load, pooling
  └─ Tools/       // editor & debug tools
-
+```
 
 ### 4.2 Design Direction
 - Component-based gameplay architecture
