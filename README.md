@@ -31,6 +31,10 @@ UE5 C++ Client Portfolio Project
   
 ▶️ [Day 3 플레이어 이동 시연 영상](videos/day03_player_movement.mp4)
 
+<summary>🎮 Day 4 – Camera Zoom Demo</summary>
+  
+▶️ [Day 4 카메라 줌 시연 영상](videos/day04_camera_zoom.mp4)
+
 </details>
 
 ---
