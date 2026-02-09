@@ -28,18 +28,23 @@ protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	virtual void Tick(float DeltaTime) override;
 	
-	// IMC_Player
+	// Input
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
 	UInputMappingContext* IMC_Player;
 	
-	// IA_Move
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
 	UInputAction* IA_Move;
 	
-	// IA_CamerZoom
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	UInputAction* IA_CameraZoom;
 	
+	UPROPERTY(EditDefaultsOnly, Category="Input")
+	UInputAction* IA_Dash;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Input")
+	UInputAction* IA_Attack;
+	
+	// Camera Zoom
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera", meta=(AllowPrivateAccess="true"))
 	USpringArmComponent* CameraBoom;
 
@@ -60,10 +65,7 @@ protected:
 	
 	float TargetArmLength = 0.f;
 	
-	// IA_Dash
-	UPROPERTY(EditDefaultsOnly, Category="Input")
-	UInputAction* IA_Dash;
-	
+	// Dash
 	UPROPERTY(EditAnywhere, Category="Dash")
 	float DashStrength = 1400.f;
 
@@ -105,7 +107,6 @@ protected:
 	FTimerHandle DashEndHandle;
 	FTimerHandle DashWindupHandle;
 	
-	
 	FVector DashDir = FVector::ZeroVector;
 	// 마지막 이동 입력(대시 방향용)
 	FVector2D LastMoveInput = FVector2D(0.f, 1.f); // 기본 전방
@@ -117,13 +118,43 @@ protected:
 	UFUNCTION(BlueprintCallable, Category="Dash")
 	void DashImpulse();
 	
+	//Combat
+	UPROPERTY(EditAnywhere, Category="Combat")
+	float AttackRandge = 180.f;
+	
+	UPROPERTY(EditAnywhere, Category="Combat")
+	float AttackRadius = 60.f;
+	
+	UPROPERTY(EditAnywhere, Category="Combat")
+	float AttackDamage = 10.f;
+	
+	UPROPERTY(EditAnywhere, Category="Combat")
+	float AttackCooldown = 0.35f;
+	
+	bool bCanAttack = true;
+	FTimerHandle AttackCooldownHandle;
+	
+	
+	
+	
+	
 
 private:
+	// Move
 	void OnMove(const FInputActionValue& Value);
+	
+	// Camera Zoom
 	void OnZoom(const FInputActionValue& Value);
+	
+	// Dash
 	void OnDash(const FInputActionValue& Value);
 	void EndDash();
 	void ResetDash();
+	
+	// Combat
+	void OnAttackStarted(const FInputActionValue &Value);
+	void DoMeleeAttack();
+	void ResetAttack();
 	
 	
 };

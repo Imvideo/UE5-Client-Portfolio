@@ -12,6 +12,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Animation/AnimInstance.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -68,6 +69,9 @@ void APlayerCharacter::BeginPlay()
 	{
 		TargetArmLength = CameraBoom->TargetArmLength;
 	}
+	
+	UE_LOG(LogTemp, Warning, TEXT("[Pawn] Class=%s"), *GetClass()->GetName());
+	UE_LOG(LogTemp, Warning, TEXT("[CameraBoom] InheritYaw=%d"), CameraBoom ? CameraBoom->bInheritYaw : -1);
 
 		
 }
@@ -113,6 +117,11 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		UE_LOG(LogTemp, Warning, TEXT("[Input] IA_Dash is null"));
 	}
 	
+	// 전투
+	if (IA_Attack)
+	{
+		EIC->BindAction(IA_Attack, ETriggerEvent::Started, this, &APlayerCharacter::OnAttackStarted);
+	}
 }
 
 // 캐릭터 이동
@@ -312,4 +321,59 @@ void APlayerCharacter::DashImpulse()
 	
 	UE_LOG(LogTemp, Warning, TEXT("[Dash] Impulse Fired"));
 
+}
+
+// 전투
+void APlayerCharacter::OnAttackStarted(const FInputActionValue& Value)
+{
+	 DoMeleeAttack();
+}
+
+void APlayerCharacter::DoMeleeAttack()
+{
+	if (!bCanAttack) return;
+	bCanAttack = false;
+	
+	const FVector Start = GetActorLocation() + FVector(0, 0, 50.f);
+	const FVector End = Start + GetActorForwardVector() * AttackRandge;
+	
+	FHitResult Hit;
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(MeleeAttack), false);
+	Params.AddIgnoredActor(this);
+	
+	const bool bHit = GetWorld()->SweepSingleByChannel(
+		Hit,
+		Start,
+		End,
+		FQuat::Identity,
+		ECC_Pawn,
+		FCollisionShape::MakeSphere(AttackRadius),
+		Params
+		);
+	
+	DrawDebugLine(GetWorld(), Start, End, bHit ? FColor::Red : FColor::Green, false, 0.35f, 0, 2.f);
+	DrawDebugSphere(GetWorld(), End, AttackRadius, 16, bHit ? FColor::Red : FColor::Green, false, 0.35f);
+	
+	if (bHit && Hit.GetActor())
+	{
+		UGameplayStatics::ApplyDamage(
+			Hit.GetActor(),
+			AttackDamage,
+			GetController(),
+			this,
+			UDamageType::StaticClass()
+			);
+		UE_LOG(LogTemp, Log, TEXT("[Attack] Hit: %s"), *Hit.GetActor()->GetName());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Log, TEXT("[Attack] Miss"));
+	}
+	
+	GetWorldTimerManager().SetTimer(AttackCooldownHandle, this, &APlayerCharacter::ResetAttack, AttackCooldown, false);
+}
+
+void APlayerCharacter::ResetAttack()
+{
+	bCanAttack = true;
 }
