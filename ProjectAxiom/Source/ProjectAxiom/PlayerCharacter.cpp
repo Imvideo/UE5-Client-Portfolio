@@ -363,7 +363,11 @@ void APlayerCharacter::DoMeleeAttack()
 			this,
 			UDamageType::StaticClass()
 			);
-		UE_LOG(LogTemp, Log, TEXT("[Attack] Hit: %s"), *Hit.GetActor()->GetName());
+		AActor* HitActor = Hit.GetActor();
+		if (HitActor)
+		{
+			UE_LOG(LogTemp, Log, TEXT("[Attack] Hit: %s"), *HitActor->GetName());
+		}
 	}
 	else
 	{
