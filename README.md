@@ -27,18 +27,26 @@ UE5 C++ Client Portfolio Project
 - Idle / Walk / Run animation blending
 
 <details>
-<summary>🎮 Day 3 – Player Movement Demo</summary>
+<summary>🎮 [Week 1 - Day 3] 플레이어 이동 구현</summary>
   
-▶️ [Day 3 플레이어 이동 시연 영상](videos/day03_player_movement.mp4)
+▶️ [플레이어 이동 시연 영상](videos/week1_day3_player_movement.mp4)
 
 </details>
 
 <details>
-<summary>🎮 Day 4 – Camera Zoom Demo</summary>
+<summary>🎮 [Week 1 - Day 4] 카메라 줌 기능 구현</summary>
   
-▶️ [Day 4 카메라 줌 시연 영상](videos/day04_camera_zoom.mp4)
+▶️ [카메라 줌 시연 영상](videos/week1_day4_camera_zoom.mp4)
 
 </details>
+
+<details>
+<summary>🎮 [Week 2 - Day 2] 적 피격 및 사망 처리</summary>
+  
+▶️ [적 피격 및 사망 시연 영상](videos/week2_day2_enemy_damage_death.mp4)
+
+</details>
+
 ---
 
 ## 3. Planned Features
