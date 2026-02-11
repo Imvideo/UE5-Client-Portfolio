@@ -22,6 +22,12 @@ protected:
 	
 	UPROPERTY(EditAnywhere, Category="Combat")
 	float HP = 0.f;
+	
+	UPROPERTY(EditAnywhere, Category="Movement")
+	float MoveSpeed = 300.f;
+	
+	UPROPERTY(EditAnywhere, Category="Movement")
+	float StopDistance = 120.f;
 
 public:	
 	virtual void Tick(float DeltaTime) override;
