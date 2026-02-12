@@ -47,6 +47,14 @@ UE5 C++ Client Portfolio Project
 
 </details>
 
+<details>
+<summary>🎮 [Week 2 - Day 3] 적 추적 이동 및 기본 애니메이션</summary>
+  
+▶️ [적 추적 이동 및 기본 애니메이션 시연 영상](videos/week2_day3_enemy_chase_anim.mp4)
+
+</details>
+
+
 ---
 
 ## 3. Planned Features
