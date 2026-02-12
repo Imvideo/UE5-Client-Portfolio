@@ -1,5 +1,6 @@
 #include "EnemyCharacter.h"
-
+#include "Components/SkeletalMeshComponent.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "Kismet/GameplayStatics.h"
 #include  "GameFramework/CharacterMovementComponent.h"
 
@@ -13,6 +14,29 @@ void AEnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 	HP = MaxHP;
 	
+	USkeletalMeshComponent* MeshComp = GetMesh();
+	if (!MeshComp) return;
+	
+	const int32 MatCount = MeshComp->GetNumMaterials();
+	for (int32 i = 0; i < MatCount; i++)
+	{
+		UMaterialInstanceDynamic* MID = MeshComp->CreateDynamicMaterialInstance(i);
+		
+		if (MID)
+		{
+			HitFlashMIDs.Add(MID);
+			
+			FLinearColor OriginalColor;
+			if (MID->GetVectorParameterValue(TEXT("Paint Tint"), OriginalColor))
+			{
+				OriginalPaintTints.Add(OriginalColor);
+			}
+			else
+			{
+				OriginalPaintTints.Add(FLinearColor::White);
+			}
+		}
+	}
 	if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
 	{
 		MoveComp->MaxWalkSpeed = MoveSpeed;   
@@ -48,6 +72,7 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damage
 	UE_LOG(LogTemp, Log, TEXT("[Enemy] %s took %.1f damage. HP=%.1f"),
 		*GetName(), DamageAmount, HP);
 	
+	StartHitFlash();
 	StartHitStun();
 	
 	if (HP <= 0.f)
@@ -88,4 +113,39 @@ void AEnemyCharacter::StartHitStun()
 void AEnemyCharacter::EndHitStun()
 {
 	bIsHitStunned = false;
+}
+
+void AEnemyCharacter::StartHitFlash()
+{
+	for (UMaterialInstanceDynamic* MID : HitFlashMIDs)
+	{
+		if (MID)
+		{
+			MID->SetVectorParameterValue(TEXT("Paint Tint"), HitFlashColor);
+		}
+	}
+	
+	GetWorldTimerManager().ClearTimer(HitFlashHandle);
+	GetWorldTimerManager().SetTimer(
+		HitFlashHandle,
+		this,
+		&AEnemyCharacter::EndHitFlash,
+		HitFlashTime,
+		false
+		);
+}
+
+void AEnemyCharacter::EndHitFlash()
+{
+	const int32 Count = HitFlashMIDs.Num();
+	for (int32 i = 0; i < Count; ++i)
+	{
+		if (HitFlashMIDs[i])
+		{
+			HitFlashMIDs[i]->SetVectorParameterValue(
+				TEXT("Paint Tint"),
+				OriginalPaintTints.IsValidIndex(i) ? OriginalPaintTints[i] : FLinearColor::White
+				);
+		}
+	}
 }

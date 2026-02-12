@@ -29,6 +29,17 @@ protected:
 	bool bIsHitStunned = false;
 	FTimerHandle HitStunHandle;
 	
+	UPROPERTY(EditAnywhere, Category="Combat|HitFlash")
+	float HitFlashTime = 0.2f;
+	
+	UPROPERTY(EditAnywhere, Category="Combat|HitFlash")
+	FLinearColor HitFlashColor = FLinearColor::Red;
+	
+	TArray<UMaterialInstanceDynamic*> HitFlashMIDs;
+	TArray<FLinearColor> OriginalPaintTints;
+	
+	FTimerHandle HitFlashHandle;
+	
 	UPROPERTY(EditAnywhere, Category="Movement")
 	float MoveSpeed = 300.f;
 	
@@ -50,6 +61,8 @@ private:
 	void Die();
 	void StartHitStun();
 	void EndHitStun();
+	void StartHitFlash();
+	void EndHitFlash();
 };
 
 
