@@ -24,6 +24,8 @@ void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	if (bIsHitStunned) return;
+	
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
 	if (!PlayerPawn) return;
 	
@@ -46,6 +48,8 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damage
 	UE_LOG(LogTemp, Log, TEXT("[Enemy] %s took %.1f damage. HP=%.1f"),
 		*GetName(), DamageAmount, HP);
 	
+	StartHitStun();
+	
 	if (HP <= 0.f)
 	{
 		Die();
@@ -66,3 +70,22 @@ void AEnemyCharacter::Die()
 	Destroy();
 }
 
+void AEnemyCharacter::StartHitStun()
+{
+	if (bIsHitStunned) return;
+	
+	bIsHitStunned = true;
+	
+	if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
+	{
+		MoveComp->StopMovementImmediately();
+	}
+	
+	GetWorldTimerManager().ClearTimer(HitStunHandle);
+	GetWorldTimerManager().SetTimer(HitStunHandle, this, &AEnemyCharacter::EndHitStun, HitStunTime, false);
+}
+
+void AEnemyCharacter::EndHitStun()
+{
+	bIsHitStunned = false;
+}

@@ -23,6 +23,12 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Combat")
 	float HP = 0.f;
 	
+	UPROPERTY(EditAnywhere, Category="Combat")
+	float HitStunTime = 0.2f;
+	
+	bool bIsHitStunned = false;
+	FTimerHandle HitStunHandle;
+	
 	UPROPERTY(EditAnywhere, Category="Movement")
 	float MoveSpeed = 300.f;
 	
@@ -42,6 +48,8 @@ public:
 		) override;
 private:
 	void Die();
+	void StartHitStun();
+	void EndHitStun();
 };
 
 
