@@ -1,4 +1,6 @@
 #include "EnemyCharacter.h"
+
+#include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Kismet/GameplayStatics.h"
@@ -48,6 +50,7 @@ void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	if (bDead) return;
 	if (bIsHitStunned) return;
 	
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
@@ -65,6 +68,8 @@ void AEnemyCharacter::Tick(float DeltaTime)
 
 float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+	if (bDead) return 0.f;
+	
 	const float ActualDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	
 	HP -= DamageAmount;
@@ -72,14 +77,16 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damage
 	UE_LOG(LogTemp, Log, TEXT("[Enemy] %s took %.1f damage. HP=%.1f"),
 		*GetName(), DamageAmount, HP);
 	
-	StartHitFlash();
-	StartHitStun();
+	
 	
 	if (HP <= 0.f)
 	{
 		Die();
+		return DamageAmount;
 	}
 	
+	StartHitFlash();
+	StartHitStun();
 	return DamageAmount;
 }
 
@@ -91,8 +98,32 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 void AEnemyCharacter::Die()
 {
+	if (bDead) return;
+	bDead = true;
+	
 	UE_LOG(LogTemp, Warning, TEXT("[Enemy] %s died"), *GetName());
-	Destroy();
+	
+	GetWorldTimerManager().ClearTimer(HitFlashHandle);
+	GetWorldTimerManager().ClearTimer(HitStunHandle);
+	
+	if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
+	{
+		MoveComp->StopMovementImmediately();
+		MoveComp->DisableMovement();
+	}
+	
+	SetActorTickEnabled(false);
+	
+	if (UCapsuleComponent* Cap = GetCapsuleComponent())
+	{
+		Cap->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+	if (USkeletalMeshComponent* MeshComp = GetMesh())
+	{
+		MeshComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+	
+	SetLifeSpan(DeathDelay);
 }
 
 void AEnemyCharacter::StartHitStun()

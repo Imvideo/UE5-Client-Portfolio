@@ -46,6 +46,11 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Movement")
 	float StopDistance = 120.f;
 
+	UPROPERTY(EditAnywhere, Category="Death")
+	float DeathDelay = 1.5f;
+	
+	bool bDead = false;
+
 public:	
 	virtual void Tick(float DeltaTime) override;
 	
