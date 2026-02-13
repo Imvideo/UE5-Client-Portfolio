@@ -54,6 +54,12 @@ UE5 C++ Client Portfolio Project
 
 </details>
 
+<details>
+<summary>🎮 [Week 2 - Day 4] 적 피격 반응(히트 스턴 및 히트 플래시)</summary>
+
+▶️ [적 피격 반응 시연 영상](videos/week2_day4_enemy_hitstun_hitflash.mp4)
+
+</details>
 
 ---
 
