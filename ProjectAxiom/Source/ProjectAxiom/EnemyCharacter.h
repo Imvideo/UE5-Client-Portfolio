@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "EnemyCharacter.generated.h"
 
+class AEnemyCharacter;
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemyDead, AEnemyCharacter*, Enemy);
+
 UCLASS()
 class PROJECTAXIOM_API AEnemyCharacter : public ACharacter
 {
@@ -50,6 +53,8 @@ protected:
 	float DeathDelay = 1.5f;
 	
 	bool bDead = false;
+	
+	
 
 public:	
 	virtual void Tick(float DeltaTime) override;
@@ -62,6 +67,10 @@ public:
 		class AController* EventInstigator,
 		AActor* DamageCauser
 		) override;
+	
+	// Enemy Spawn
+	UPROPERTY(BlueprintAssignable, Category="Wave")
+	FOnEnemyDead OnEnemyDead;
 private:
 	void Die();
 	void StartHitStun();

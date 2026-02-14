@@ -9,6 +9,8 @@
 AEnemyCharacter::AEnemyCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 void AEnemyCharacter::BeginPlay()
@@ -100,6 +102,8 @@ void AEnemyCharacter::Die()
 {
 	if (bDead) return;
 	bDead = true;
+	
+	OnEnemyDead.Broadcast(this);
 	
 	UE_LOG(LogTemp, Warning, TEXT("[Enemy] %s died"), *GetName());
 	
