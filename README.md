@@ -61,6 +61,12 @@ UE5 C++ Client Portfolio Project
 
 </details>
 
+<details>
+<summary>🎮 [Week 2 - Day 6] 적 웨이브 스폰 시스템 구현</summary>
+
+▶️ [적 웨이브 스폰 시스템 시연 영상](videos/week2_day6_wave_spawn.mp4)
+
+</details>
 ---
 
 ## 3. Planned Features
