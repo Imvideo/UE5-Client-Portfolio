@@ -54,6 +54,15 @@ protected:
 	
 	bool bDead = false;
 	
+	UPROPERTY(EditAnywhere, Category="Drop")
+	TSubclassOf<AActor> CoinPickupClass;
+
+	UPROPERTY(EditAnywhere, Category="Drop")
+	float CoinDropChance = 1.0f;
+
+	UPROPERTY(EditAnywhere, Category="Drop")
+	float CoinSpawnZOffset = 50.f;
+	
 	
 
 public:	

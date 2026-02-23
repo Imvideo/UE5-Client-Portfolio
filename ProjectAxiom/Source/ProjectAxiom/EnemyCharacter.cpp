@@ -1,5 +1,6 @@
 #include "EnemyCharacter.h"
 
+#include "Engine/World.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Materials/MaterialInstanceDynamic.h"
@@ -104,6 +105,18 @@ void AEnemyCharacter::Die()
 	bDead = true;
 	
 	OnEnemyDead.Broadcast(this);
+	
+	// 코인 생성
+	if (CoinPickupClass && FMath::FRand() <= CoinDropChance)
+	{
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride =
+			ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+		const FVector SpawnLoc = GetActorLocation() + FVector(0.f, 0.f, CoinSpawnZOffset);
+		GetWorld()->SpawnActor<AActor>(CoinPickupClass, SpawnLoc, FRotator::ZeroRotator, Params);
+	}
+	
 	
 	UE_LOG(LogTemp, Warning, TEXT("[Enemy] %s died"), *GetName());
 	
