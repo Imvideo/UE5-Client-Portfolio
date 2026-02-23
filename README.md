@@ -67,6 +67,13 @@ UE5 C++ Client Portfolio Project
 ▶️ [적 웨이브 스폰 시스템 시연 영상](videos/week2_day6_wave_spawn.mp4)
 
 </details>
+
+<details>
+<summary>🎮 [Week 3 - Day 1] 적 처치 코인 드랍 및 획득</summary>
+
+▶️ [적 처치 코인 드랍 및 획득 시연 영상](videos/week3_day1_coin_drop_pickup.mp4)
+
+</details>
 ---
 
 ## 3. Planned Features
