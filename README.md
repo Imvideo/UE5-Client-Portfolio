@@ -74,6 +74,22 @@ UE5 C++ Client Portfolio Project
 ▶️ [적 처치 코인 드랍 및 획득 시연 영상](videos/week3_day1_coin_drop_pickup.mp4)
 
 </details>
+
+<details>
+<summary>🎮 [Week 3 - Day 2] HUD에 코인 정보 표시</summary>
+
+▶️ [HUD 코인 표시 시연 영상](videos/week3_day2_hud_coin_wave.mp4)
+
+### 구현 내용
+- WBP_HUD 위젯 생성 및 화면 출력
+- 코인 값 실시간 UI 표시(TextBlock 바인딩)
+
+### 설계 포인트
+- HUD는 Owning Player Pawn을 통해 플레이어 데이터를 조회
+- 빠른 구현을 위해 바인딩 방식 사용(추후 이벤트 방식으로 전환 가능)
+
+</details>
+
 ---
 
 ## 3. Planned Features
