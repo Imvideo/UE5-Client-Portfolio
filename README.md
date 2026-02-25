@@ -90,6 +90,23 @@ UE5 C++ Client Portfolio Project
 
 </details>
 
+<details>
+<summary>🎮 [Week 3 - Day 3] 코인 기반 공격력 강화 시스템</summary>
+
+▶️ [공격력 강화 및 HUD 데미지 표시 시연 영상](videos/week3_day3_upgrade_damage.mp4)
+
+### 구현 내용
+- 코인 소모로 공격력(DamageMultiplier) 증가
+- GetFinalDamage() 함수로 최종 데미지 계산 분리
+- HUD에 실시간 최종 데미지 표시
+
+### 설계 포인트
+- 공격력 계산을 GetFinalDamage()로 분리하여 확장 가능 구조 설계
+- 강화 로직(UpgradeDamage)과 전투 로직을 분리
+- HUD는 바인딩 기반으로 수치 변화 자동 반영
+
+</details>
+
 ---
 
 ## 3. Planned Features
