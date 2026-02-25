@@ -126,13 +126,29 @@ protected:
 	float AttackRadius = 60.f;
 	
 	UPROPERTY(EditAnywhere, Category="Combat")
-	float AttackDamage = 10.f;
+	float BaseDamage = 10.f;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	float DamageMultiplier = 1.f;
 	
 	UPROPERTY(EditAnywhere, Category="Combat")
 	float AttackCooldown = 0.35f;
 	
+	UFUNCTION(BlueprintCallable, Category="Combat")
+	float GetFinalDamage() const;
+	
 	bool bCanAttack = true;
 	FTimerHandle AttackCooldownHandle;
+	
+	//Upgrade
+	UPROPERTY(EditAnywhere, Category="Upgrade")
+	int32 UpgradeCost = 1;
+	
+	UFUNCTION(BlueprintCallable, Category="Upgrade")
+	bool UpgradeDamage();
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Currency")
+	int32 Coin = 0;
 	
 	
 	
@@ -156,5 +172,6 @@ private:
 	void DoMeleeAttack();
 	void ResetAttack();
 	
-	
+	// 강화 테스트
+	void TestUpgrade();
 };

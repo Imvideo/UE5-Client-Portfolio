@@ -122,6 +122,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	{
 		EIC->BindAction(IA_Attack, ETriggerEvent::Started, this, &APlayerCharacter::OnAttackStarted);
 	}
+	
+	// 강화 테스트용
+	PlayerInputComponent->BindKey(EKeys::SpaceBar, IE_Pressed, this, &APlayerCharacter::TestUpgrade);
 }
 
 // 캐릭터 이동
@@ -356,6 +359,7 @@ void APlayerCharacter::DoMeleeAttack()
 	
 	if (bHit && Hit.GetActor())
 	{
+		const float AttackDamage = GetFinalDamage();
 		UGameplayStatics::ApplyDamage(
 			Hit.GetActor(),
 			AttackDamage,
@@ -380,4 +384,26 @@ void APlayerCharacter::DoMeleeAttack()
 void APlayerCharacter::ResetAttack()
 {
 	bCanAttack = true;
+}
+
+float APlayerCharacter::GetFinalDamage() const
+{
+	return BaseDamage * DamageMultiplier;
+}
+
+bool APlayerCharacter::UpgradeDamage()
+{
+	if (Coin < UpgradeCost) return false;
+	
+	Coin -= UpgradeCost;
+	DamageMultiplier += 1.f;
+	return true;
+}
+
+void APlayerCharacter::TestUpgrade()
+{
+	if (UpgradeDamage())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Upgrade Success"));
+	}
 }
